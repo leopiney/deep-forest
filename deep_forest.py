@@ -88,6 +88,11 @@ class MultiGrainedScanner():
         # Swap the 0 and 1 axis so as to get for each window, the value of each sample.
         #
         newX = np.swapaxes(newX, 0, 1)
+
+        if len(newX.shape) > 3:
+            shape = list(newX.shape)
+            newX = newX.reshape(shape[:2] + [np.prod(shape[2:])])
+
         self.logger.info(
             'Scanning turned X ({}) into newX ({}). {} new instances were added '
             'per sample'.format(X.shape, newX.shape, new_instances_total)
