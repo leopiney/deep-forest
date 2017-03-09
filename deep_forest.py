@@ -2,10 +2,8 @@
 # Inspired by https://arxiv.org/abs/1702.08835 and https://github.com/STO-OTZ/my_gcForest/
 #
 import numpy as np
-import random
 
-from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_predict
 
 from utils import create_logger, rolling_window
@@ -15,7 +13,12 @@ class MGCForest():
     """Multi-Grained Cascade Forest"""
     def __init__(self, estimator_class, estimator_params, stride_ratios=[0.25], folds=3):
         self.mgs_instances = [
-            MultiGrainedScanner(estimator_class, estimator_params['mgs'], stride_ratio=stride_ratio, folds=folds)
+            MultiGrainedScanner(
+                estimator_class,
+                estimator_params['mgs'],
+                stride_ratio=stride_ratio,
+                folds=folds
+            )
             for stride_ratio in stride_ratios
         ]
         self.stride_ratios = stride_ratios
@@ -44,21 +47,20 @@ class MGCForest():
 
 class MultiGrainedScanner():
     def __init__(
-            self, estimator_class, estimator_params, stride_ratio=0.25, folds=3, verbose=False
-        ):
+        self, estimator_class, estimator_params, stride_ratio=0.25, folds=3, verbose=False
+    ):
         self.estimator_class = estimator_class
         self.estimator_params = estimator_params
         self.stride_ratio = stride_ratio
         self.folds = folds
 
-        self.estimators = [estimator_class(**params) for params in estimator_params]
+        self.windows_estimators = []
 
         self.logger = create_logger(self, verbose)
 
-    def slices(self, X):
+    def slices(self, X, reshape_2d=False):
         self.logger.debug('Slicing X with shape {}'.format(X.shape))
         sample_shape = list(X[0].shape)
-        sample_dim = len(sample_shape)
 
         window_shape = np.maximum(
             np.array([s * self.stride_ratio for s in sample_shape]), 1
@@ -72,76 +74,79 @@ class MultiGrainedScanner():
         windows_count = [sample_shape[i] - window_shape[i] + 1 for i in range(len(sample_shape))]
         new_instances_total = np.prod(windows_count)
 
-        self.logger.debug('Slicing {} windows. Total new instances: {}'.format(
-            windows_count, new_instances_total
-        ))
+        self.logger.debug('Slicing {} windows.'.format(windows_count))
 
+        #
+        # For each sample, get all the windows with their values
+        #
         newX = np.array([
             rolling_window(x, window_shape)
             for x in X
         ])
 
         #
-        # Always return a 2D result so that the RandomForestClassifier can deal with
-        # the training of this new data - Only accepts dimentions equal or lower than 2.
+        # Swap the 0 and 1 axis so as to get for each window, the value of each sample.
         #
-        newX = newX.reshape(
-            (np.prod(newX.shape[:-sample_dim]), np.prod(newX.shape[-sample_dim:]))
+        newX = np.swapaxes(newX, 0, 1)
+        self.logger.info(
+            'Scanning turned X ({}) into newX ({}). {} new instances were added '
+            'per sample'.format(X.shape, newX.shape, new_instances_total)
         )
 
-        return newX, new_instances_total
+        return newX
 
     def scan_fit(self, X, y):
         self.logger.info('Scanning and fitting for X ({}) and y ({}) started'.format(
             X.shape, y.shape
         ))
         self.n_classes = np.unique(y).size
-        newX, new_instances_total = self.slices(X)
-        newy = y.repeat(new_instances_total)
+        sliced_X = self.slices(X)
 
-        self.logger.info(
-            'Scanning turned X ({}) into newX ({}). {} new instances were added '
-            'per sample'.format(X.shape, newX.shape, new_instances_total)
-        )
+        #
+        # Create an estimator for each generated window
+        #
+        self.windows_estimators = []
+        predictions = []
+        for window_index, window_X in enumerate(sliced_X):
+            estimators = [self.estimator_class(**params) for params in self.estimator_params]
+            self.windows_estimators.append(estimators)
 
-        sample_vector_list = []
-        for estimator in self.estimators:
-            self.logger.debug('Fitting newX ({}) and newy ({}) with estimator {}'.format(
-                newX.shape, newy.shape, estimator
+            self.logger.info('Training estimators for window #{} with shape {}'.format(
+                window_index, window_X.shape
             ))
-            estimator.fit(newX, newy)
 
-            #
-            # Gets a prediction of newX with shape (len(newX), n_classes).
-            # The method `predict_proba` returns a vector of size n_classes.
-            #
-            self.logger.debug('Cross-validation with estimator {}'.format(estimator))
-            prediction = cross_val_predict(
-                estimator,
-                newX,
-                newy,
-                cv=self.folds,
-                method='predict_proba',
-                n_jobs=-1,
-            )
+            for estimator_index, estimator in enumerate(estimators):
+                self.logger.debug('Fitting window #{} with shape ({}) with estimator #{}'.format(
+                    window_index, window_X.shape, estimator_index
+                ))
+                estimator.fit(window_X, y)
 
-            #
-            # Reshapes the predictions so as to get all the window predictions of a single sample.
-            # Gets a ndarray with shape (len(X), new_instances_total * n_classes)
-            #
-            sample_vector = prediction.reshape((len(X), new_instances_total * self.n_classes))
-            sample_vector_list.append(sample_vector)
+                #
+                # Gets a prediction of sliced_X with shape (len(newX), n_classes).
+                # The method `predict_proba` returns a vector of size n_classes.
+                #
+                self.logger.debug('Cross-validation with estimator #{}'.format(estimator_index))
+                prediction = cross_val_predict(
+                    estimator,
+                    window_X,
+                    y,
+                    cv=self.folds,
+                    method='predict_proba',
+                    n_jobs=-1,
+                )
 
-        return np.hstack(sample_vector_list)
+                predictions.append(prediction)
+
+        return np.hstack(predictions)
 
     def scan_predict(self, X):
         self.logger.info('Predicting X ({})'.format(X.shape))
-        newX, new_instances_total = self.slices(X)
+        sliced_X = self.slices(X)
         return np.hstack([
             estimator
-                .predict_proba(newX)
-                .reshape((len(X), new_instances_total * self.n_classes))
-            for estimator in self.estimators
+            .predict_proba(window_X)
+            for window_X, window_estimators in zip(sliced_X, self.windows_estimators)
+            for estimator in window_estimators
         ])
 
     def __repr__(self):
@@ -167,7 +172,6 @@ class CascadeForest():
         while True:
             self.logger.info('Level {}:: X with shape: {}'.format(self.level + 1, X.shape))
             estimators = [self.estimator_class(**params) for params in self.estimator_params]
-
 
             predictions = []
             for estimator in estimators:
@@ -202,9 +206,7 @@ class CascadeForest():
             # the class with maximum score for each of them.
             #
             y_prediction = self.classes.take(
-                np.array(predictions)
-                    .mean(axis=0)
-                    .argmax(axis=1)
+                np.array(predictions).mean(axis=0).argmax(axis=1)
             )
 
             score = accuracy_score(y, y_prediction)
@@ -229,9 +231,7 @@ class CascadeForest():
             X = np.hstack([X] + predictions)
 
         return self.classes.take(
-            np.array(predictions)
-                .mean(axis=0)
-                .argmax(axis=1)
+            np.array(predictions).mean(axis=0).argmax(axis=1)
         )
 
     def __repr__(self):
