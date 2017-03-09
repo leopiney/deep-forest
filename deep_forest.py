@@ -143,9 +143,9 @@ class MultiGrainedScanner():
                 predictions.append(prediction)
 
         self.logger.info('Finished fitting X ({}) and got predictions with shape {}'.format(
-            X.shape, np.array(self.predictions).shape
+            X.shape, np.array(predictions).shape
         ))
-        return np.hstack(self.predictions)
+        return np.hstack(predictions)
 
     def scan_predict(self, X):
         self.logger.info('Predicting X ({})'.format(X.shape))
