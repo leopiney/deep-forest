@@ -111,7 +111,7 @@ class MultiGrainedScanner():
             estimators = [self.estimator_class(**params) for params in self.estimator_params]
             self.windows_estimators.append(estimators)
 
-            self.logger.info('Training estimators for window #{} with shape {}'.format(
+            self.logger.debug('Training estimators for window #{} with shape {}'.format(
                 window_index, window_X.shape
             ))
 
@@ -137,7 +137,10 @@ class MultiGrainedScanner():
 
                 predictions.append(prediction)
 
-        return np.hstack(predictions)
+        self.logger.info('Finished fitting X ({}) and got predictions with shape {}'.format(
+            X.shape, np.array(self.predictions).shape
+        ))
+        return np.hstack(self.predictions)
 
     def scan_predict(self, X):
         self.logger.info('Predicting X ({})'.format(X.shape))
