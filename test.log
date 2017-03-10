@@ -1,0 +1,561 @@
+(.env) lpMacbook:deep-forest leo$ python test.py
+Data: (70000, 784), target: (70000,)
+X_train: (56000, 28, 28) uint8
+y_train: (56000,) float64
+X_test: (14000, 28, 28)
+y_test: (14000,)
+<MultiGrainedScanner 0.25> - Scanning and fitting for X ((56000, 28, 28)) and y ((56000,)) started
+<MultiGrainedScanner 0.25> - Slicing X with shape (56000, 28, 28)
+<MultiGrainedScanner 0.25> - Got window shape: (2,)
+<MultiGrainedScanner 0.25> - Slicing [22, 22] windows.
+<MultiGrainedScanner 0.25> - Scanning turned X ((56000, 28, 28)) into newX ((22, 56000, 1078)). 484 new instances were added per sample
+<MultiGrainedScanner 0.25> - Training estimators for window #0 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #0 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #0 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #1 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #1 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #1 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #2 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #2 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #2 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #3 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #3 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #3 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #4 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #4 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #4 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #5 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #5 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #5 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #6 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #6 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #6 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #7 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #7 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #7 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #8 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #8 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #8 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #9 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #9 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #9 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #10 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #10 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #10 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #11 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #11 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #11 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #12 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #12 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #12 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #13 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #13 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #13 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #14 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #14 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #14 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #15 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #15 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #15 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #16 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #16 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #16 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #17 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #17 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #17 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #18 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #18 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #18 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #19 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #19 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #19 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #20 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #20 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #20 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Training estimators for window #21 with shape (56000, 1078)
+<MultiGrainedScanner 0.25> - Fitting window #21 with shape ((56000, 1078)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.25> - Fitting window #21 with shape ((56000, 1078)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.25> - Finished fitting X ((56000, 28, 28)) and got predictions with shape (44, 56000, 10)
+<MultiGrainedScanner 0.1111111111111111> - Scanning and fitting for X ((56000, 28, 28)) and y ((56000,)) started
+<MultiGrainedScanner 0.1111111111111111> - Slicing X with shape (56000, 28, 28)
+<MultiGrainedScanner 0.1111111111111111> - Got window shape: (2,)
+<MultiGrainedScanner 0.1111111111111111> - Slicing [26, 26] windows.
+<MultiGrainedScanner 0.1111111111111111> - Scanning turned X ((56000, 28, 28)) into newX ((26, 56000, 234)). 676 new instances were added per sample
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #0 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #0 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #0 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #1 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #1 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #1 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #2 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #2 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #2 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #3 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #3 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #3 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #4 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #4 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #4 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #5 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #5 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #5 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #6 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #6 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #6 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #7 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #7 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #7 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #8 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #8 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #8 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #9 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #9 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #9 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #10 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #10 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #10 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #11 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #11 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #11 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #12 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #12 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #12 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #13 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #13 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #13 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #14 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #14 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #14 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #15 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #15 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #15 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #16 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #16 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #16 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #17 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #17 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #17 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #18 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #18 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #18 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #19 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #19 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #19 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #20 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #20 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #20 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #21 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #21 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #21 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #22 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #22 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #22 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #23 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #23 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #23 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #24 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #24 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #24 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Training estimators for window #25 with shape (56000, 234)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #25 with shape ((56000, 234)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Fitting window #25 with shape ((56000, 234)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.1111111111111111> - Finished fitting X ((56000, 28, 28)) and got predictions with shape (52, 56000, 10)
+<MultiGrainedScanner 0.0625> - Scanning and fitting for X ((56000, 28, 28)) and y ((56000,)) started
+<MultiGrainedScanner 0.0625> - Slicing X with shape (56000, 28, 28)
+<MultiGrainedScanner 0.0625> - Got window shape: (2,)
+<MultiGrainedScanner 0.0625> - Slicing [28, 28] windows.
+<MultiGrainedScanner 0.0625> - Scanning turned X ((56000, 28, 28)) into newX ((28, 56000, 28)). 784 new instances were added per sample
+<MultiGrainedScanner 0.0625> - Training estimators for window #0 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #0 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #0 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #1 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #1 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #1 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #2 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #2 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #2 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #3 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #3 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #3 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #4 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #4 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #4 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #5 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #5 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #5 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #6 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #6 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #6 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #7 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #7 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #7 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #8 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #8 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #8 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #9 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #9 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #9 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #10 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #10 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #10 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #11 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #11 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #11 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #12 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #12 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #12 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #13 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #13 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #13 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #14 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #14 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #14 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #15 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #15 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #15 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #16 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #16 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #16 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #17 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #17 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #17 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #18 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #18 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #18 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #19 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #19 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #19 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #20 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #20 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #20 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #21 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #21 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #21 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #22 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #22 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #22 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #23 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #23 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #23 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #24 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #24 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #24 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #25 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #25 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #25 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #26 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #26 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #26 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Training estimators for window #27 with shape (56000, 28)
+<MultiGrainedScanner 0.0625> - Fitting window #27 with shape ((56000, 28)) with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #0 (<class 'sklearn.ensemble.forest.ExtraTreesClassifier'>)
+<MultiGrainedScanner 0.0625> - Fitting window #27 with shape ((56000, 28)) with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Cross-validation with estimator #1 (<class 'sklearn.ensemble.forest.RandomForestClassifier'>)
+<MultiGrainedScanner 0.0625> - Finished fitting X ((56000, 28, 28)) and got predictions with shape (56, 56000, 10)
+<CascadeForest 4> - Cascade fitting for X ((56000, 1520)) and y ((56000,)) started
+<CascadeForest 4> - Level 1:: X with shape: (56000, 1520)
+<CascadeForest 4> - Fitting X ((56000, 1520)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features=1, max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1520)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1520)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features=1, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1520)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Level 1:: got all predictions
+<CascadeForest 4> - Level 1:: got accuracy 0.9789285714285715
+<CascadeForest 4> - Level 2:: X with shape: (56000, 1560)
+<CascadeForest 4> - Fitting X ((56000, 1560)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features=1, max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1560)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1560)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features=1, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1560)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Level 2:: got all predictions
+<CascadeForest 4> - Level 2:: got accuracy 0.9801428571428571
+<CascadeForest 4> - Level 3:: X with shape: (56000, 1600)
+<CascadeForest 4> - Fitting X ((56000, 1600)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features=1, max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1600)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1600)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features=1, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1600)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Level 3:: got all predictions
+<CascadeForest 4> - Level 3:: got accuracy 0.9805714285714285
+<CascadeForest 4> - Level 4:: X with shape: (56000, 1640)
+<CascadeForest 4> - Fitting X ((56000, 1640)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features=1, max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1640)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1640)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features=1, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1640)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Level 4:: got all predictions
+<CascadeForest 4> - Level 4:: got accuracy 0.9807321428571428
+<CascadeForest 4> - Level 5:: X with shape: (56000, 1680)
+<CascadeForest 4> - Fitting X ((56000, 1680)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features=1, max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1680)) and y ((56000,)) with estimator ExtraTreesClassifier(bootstrap=False, class_weight=None, criterion='gini',
+           max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+           min_impurity_split=1e-07, min_samples_leaf=1,
+           min_samples_split=11, min_weight_fraction_leaf=0.0,
+           n_estimators=1000, n_jobs=-1, oob_score=False,
+           random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1680)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features=1, max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Fitting X ((56000, 1680)) and y ((56000,)) with estimator RandomForestClassifier(bootstrap=True, class_weight=None, criterion='gini',
+            max_depth=None, max_features='sqrt', max_leaf_nodes=None,
+            min_impurity_split=1e-07, min_samples_leaf=1,
+            min_samples_split=11, min_weight_fraction_leaf=0.0,
+            n_estimators=1000, n_jobs=-1, oob_score=False,
+            random_state=None, verbose=0, warm_start=False)
+<CascadeForest 4> - Level 5:: got all predictions
+<CascadeForest 4> - Level 5:: got accuracy 0.9806964285714286
+<MultiGrainedScanner 0.25> - Predicting X ((14000, 28, 28))
+<MultiGrainedScanner 0.25> - Slicing X with shape (14000, 28, 28)
+<MultiGrainedScanner 0.25> - Got window shape: (2,)
+<MultiGrainedScanner 0.25> - Slicing [22, 22] windows.
+<MultiGrainedScanner 0.25> - Scanning turned X ((14000, 28, 28)) into newX ((22, 14000, 1078)). 484 new instances were added per sample
+<MultiGrainedScanner 0.1111111111111111> - Predicting X ((14000, 28, 28))
+<MultiGrainedScanner 0.1111111111111111> - Slicing X with shape (14000, 28, 28)
+<MultiGrainedScanner 0.1111111111111111> - Got window shape: (2,)
+<MultiGrainedScanner 0.1111111111111111> - Slicing [26, 26] windows.
+<MultiGrainedScanner 0.1111111111111111> - Scanning turned X ((14000, 28, 28)) into newX ((26, 14000, 234)). 676 new instances were added per sample
+<MultiGrainedScanner 0.0625> - Predicting X ((14000, 28, 28))
+<MultiGrainedScanner 0.0625> - Slicing X with shape (14000, 28, 28)
+<MultiGrainedScanner 0.0625> - Got window shape: (2,)
+<MultiGrainedScanner 0.0625> - Slicing [28, 28] windows.
+<MultiGrainedScanner 0.0625> - Scanning turned X ((14000, 28, 28)) into newX ((28, 14000, 28)). 784 new instances were added per sample
+<CascadeForest 4> - Shape of predictions: (4, 14000, 10) shape of X: (14000, 1520)
+<CascadeForest 4> - Shape of predictions: (4, 14000, 10) shape of X: (14000, 1560)
+<CascadeForest 4> - Shape of predictions: (4, 14000, 10) shape of X: (14000, 1600)
+<CascadeForest 4> - Shape of predictions: (4, 14000, 10) shape of X: (14000, 1640)
+Prediction shape: (14000,)
+Accuracy: 0.985714285714 F1 score: 0.985716621775
