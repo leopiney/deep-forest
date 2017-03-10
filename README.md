@@ -8,6 +8,10 @@
 [This paper](https://arxiv.org/abs/1702.08835) introduces **gcForest** as an alternative to
 Deep Learning techniques. Here's an initial implementation of what *I concluded* the *gcForest* algorithm is.
 
+# To do
+
+1. Scikit-learn wrapper
+
 # Running the example
 
 1. Create virtual environment: `python3.x -m venv env && source env/bin/activate`
