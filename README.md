@@ -1,5 +1,7 @@
 *WIP*
 
+![deep-forest](http://www.aimechanic.com/wp-content/uploads/2017/03/Deep-Forest.png)
+
 # Introduction
 
 *Inspired by https://arxiv.org/abs/1702.08835 and https://github.com/STO-OTZ/my_gcForest/*
