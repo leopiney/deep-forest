@@ -223,7 +223,7 @@ class MultiGrainedScanner():
         ])
 
     def __repr__(self):
-        return '<MultiGrainedScanner {}>'.format(self.stride_ratio)
+        return '<MultiGrainedScanner stride_ratio={}>'.format(self.stride_ratio)
 
 
 class CascadeForest():
@@ -317,4 +317,4 @@ class CascadeForest():
         )
 
     def __repr__(self):
-        return '<CascadeForest {}>'.format(len(self.estimators_config))
+        return '<CascadeForest forests={}>'.format(len(self.estimators_config))
