@@ -11,19 +11,19 @@ from utils import create_logger, rolling_window
 
 class MGCForest():
     """Multi-Grained Cascade Forest"""
-    def __init__(self, estimator_class, estimator_params, stride_ratios=[0.25], folds=3):
+    def __init__(self, estimators_config, stride_ratios=[0.25], folds=3, verbose=False):
         self.mgs_instances = [
             MultiGrainedScanner(
-                estimator_class,
-                estimator_params['mgs'],
+                estimators_config['mgs'],
                 stride_ratio=stride_ratio,
-                folds=folds
+                folds=folds,
+                verbose=verbose,
             )
             for stride_ratio in stride_ratios
         ]
         self.stride_ratios = stride_ratios
 
-        self.c_forest = CascadeForest(estimator_class, estimator_params['cascade'])
+        self.c_forest = CascadeForest(estimators_config['cascade'], verbose=verbose)
 
     def fit(self, X, y):
         X_scanned = np.hstack([
@@ -47,10 +47,9 @@ class MGCForest():
 
 class MultiGrainedScanner():
     def __init__(
-        self, estimator_class, estimator_params, stride_ratio=0.25, folds=3, verbose=False
+        self, estimators_config, stride_ratio=0.25, folds=3, verbose=False
     ):
-        self.estimator_class = estimator_class
-        self.estimator_params = estimator_params
+        self.estimators_config = estimators_config
         self.stride_ratio = stride_ratio
         self.folds = folds
 
@@ -113,7 +112,10 @@ class MultiGrainedScanner():
         self.windows_estimators = []
         predictions = []
         for window_index, window_X in enumerate(sliced_X):
-            estimators = [self.estimator_class(**params) for params in self.estimator_params]
+            estimators = [
+                estimator_config['estimator_class'](**estimator_config['estimator_params'])
+                for estimator_config in self.estimators_config
+            ]
             self.windows_estimators.append(estimators)
 
             self.logger.debug('Training estimators for window #{} with shape {}'.format(
@@ -121,16 +123,19 @@ class MultiGrainedScanner():
             ))
 
             for estimator_index, estimator in enumerate(estimators):
-                self.logger.debug('Fitting window #{} with shape ({}) with estimator #{}'.format(
-                    window_index, window_X.shape, estimator_index
-                ))
+                self.logger.debug(
+                    'Fitting window #{} with shape ({}) with estimator #{} ({})'
+                    .format(window_index, window_X.shape, estimator_index, estimator.__class__)
+                )
                 estimator.fit(window_X, y)
 
                 #
                 # Gets a prediction of sliced_X with shape (len(newX), n_classes).
                 # The method `predict_proba` returns a vector of size n_classes.
                 #
-                self.logger.debug('Cross-validation with estimator #{}'.format(estimator_index))
+                self.logger.debug('Cross-validation with estimator #{} ({})'.format(
+                    estimator_index, estimator.__class__
+                ))
                 prediction = cross_val_predict(
                     estimator,
                     window_X,
@@ -163,9 +168,8 @@ class MultiGrainedScanner():
 
 class CascadeForest():
 
-    def __init__(self, estimator_class, estimator_params, folds=3, verbose=False):
-        self.estimator_class = estimator_class
-        self.estimator_params = estimator_params
+    def __init__(self, estimators_config, folds=3, verbose=False):
+        self.estimators_config = estimators_config
         self.folds = folds
 
         self.logger = create_logger(self, verbose)
@@ -179,7 +183,10 @@ class CascadeForest():
 
         while True:
             self.logger.info('Level {}:: X with shape: {}'.format(self.level + 1, X.shape))
-            estimators = [self.estimator_class(**params) for params in self.estimator_params]
+            estimators = [
+                estimator_config['estimator_class'](**estimator_config['estimator_params'])
+                for estimator_config in self.estimators_config
+            ]
 
             predictions = []
             for estimator in estimators:
@@ -243,4 +250,4 @@ class CascadeForest():
         )
 
     def __repr__(self):
-        return '<CascadeForest {}>'.format(len(self.estimator_params))
+        return '<CascadeForest {}>'.format(len(self.estimators_config))
