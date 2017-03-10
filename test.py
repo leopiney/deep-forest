@@ -31,10 +31,10 @@ X_test = X_test.reshape((len(X_test), 28, 28))
 #
 # Limit the size of the dataset
 #
-# X_train = X_train[:1000]
-# y_train = y_train[:1000]
-# X_test = X_test[:1000]
-# y_test = y_test[:1000]
+X_train = X_train[:1000]
+y_train = y_train[:1000]
+X_test = X_test[:1000]
+y_test = y_test[:1000]
 
 print('X_train:', X_train.shape, X_train.dtype)
 print('y_train:', y_train.shape, y_train.dtype)
