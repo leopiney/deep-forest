@@ -2,37 +2,76 @@
 # Inspired by https://arxiv.org/abs/1702.08835 and https://github.com/STO-OTZ/my_gcForest/
 #
 import numpy as np
-import random
 
-from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_predict
 
 from utils import create_logger, rolling_window
 
 
 class MGCForest():
-    """Multi-Grained Cascade Forest"""
-    def __init__(self, estimator_class, estimator_params, stride_ratios=[0.25], folds=3):
+    """
+    Multi-Grained Cascade Forest
+
+    @param estimators_config    A dictionary containing the configurations for the estimators of
+                                the estimators of the MultiGrainedScanners and the CascadeForest.
+    @param stride_ratios        A list of stride ratios for each MultiGrainedScanner instance.
+    @param folds                The number of k-folds to use.
+    @param verbose              Adds verbosity.
+
+    Example:
+
+    estimators_config={
+        'mgs': [{
+            'estimator_class': ExtraTreesClassifier,
+            'estimator_params': {
+                'n_estimators': 30,
+                'min_samples_split': 21,
+                'n_jobs': -1,
+            }
+        }],
+        'cascade': [{
+            'estimator_class': ExtraTreesClassifier,
+            'estimator_params': {
+                'n_estimators': 1000,
+                'min_samples_split': 11,
+                'max_features': 1,
+                'n_jobs': -1,
+            }
+        }]
+    },
+    """
+    def __init__(
+        self,
+        estimators_config,
+        stride_ratios=[1.0 / 4, 1.0 / 9, 1.0 / 16],
+        folds=3,
+        verbose=False
+    ):
         self.mgs_instances = [
-            MultiGrainedScanner(estimator_class, estimator_params['mgs'], stride_ratio=stride_ratio, folds=folds)
+            MultiGrainedScanner(
+                estimators_config['mgs'],
+                stride_ratio=stride_ratio,
+                folds=folds,
+                verbose=verbose,
+            )
             for stride_ratio in stride_ratios
         ]
         self.stride_ratios = stride_ratios
 
-        self.c_forest = CascadeForest(estimator_class, estimator_params['cascade'])
+        self.c_forest = CascadeForest(estimators_config['cascade'], verbose=verbose)
 
     def fit(self, X, y):
-        X_scanned = np.hstack([
-            mgs.scan_fit(X, y)
+        scanned_X = np.hstack([
+            mgs.fit(X, y)
             for mgs in self.mgs_instances
         ])
 
-        self.c_forest.fit(X_scanned, y)
+        self.c_forest.fit(scanned_X, y)
 
     def predict(self, X):
         scan_pred = np.hstack([
-            mgs.scan_predict(X)
+            mgs.predict(X)
             for mgs in self.mgs_instances
         ])
 
@@ -43,22 +82,37 @@ class MGCForest():
 
 
 class MultiGrainedScanner():
+    """
+    Multi-Grained Scanner
+
+    @param estimators_config    A list containing the class and parameters of the estimators for
+                                the MultiGrainedScanner.
+    @param stride_ratio         The stride ratio to use for slicing the input.
+    @param folds                The number of k-folds to use.
+    @param verbose              Adds verbosity.
+    """
     def __init__(
-            self, estimator_class, estimator_params, stride_ratio=0.25, folds=3, verbose=False
-        ):
-        self.estimator_class = estimator_class
-        self.estimator_params = estimator_params
+        self, estimators_config, stride_ratio=0.25, folds=3, verbose=False
+    ):
+        self.estimators_config = estimators_config
         self.stride_ratio = stride_ratio
         self.folds = folds
 
-        self.estimators = [estimator_class(**params) for params in estimator_params]
+        self.windows_estimators = []
 
         self.logger = create_logger(self, verbose)
 
     def slices(self, X):
+        """
+        Given an input X with dimention N, return a ndarray of dimention 3 with all the instances
+        values for each window.
+
+        For example, if the input has shape (10, 400), and the stride_ratio is 0.25, then this
+        will generate 301 windows with shape (10, 100). The final result would have a shape of
+        (301, 10, 100).
+        """
         self.logger.debug('Slicing X with shape {}'.format(X.shape))
         sample_shape = list(X[0].shape)
-        sample_dim = len(sample_shape)
 
         window_shape = np.maximum(
             np.array([s * self.stride_ratio for s in sample_shape]), 1
@@ -72,87 +126,117 @@ class MultiGrainedScanner():
         windows_count = [sample_shape[i] - window_shape[i] + 1 for i in range(len(sample_shape))]
         new_instances_total = np.prod(windows_count)
 
-        self.logger.debug('Slicing {} windows. Total new instances: {}'.format(
-            windows_count, new_instances_total
-        ))
+        self.logger.debug('Slicing {} windows.'.format(windows_count))
 
-        newX = np.array([
+        #
+        # For each sample, get all the windows with their values
+        #
+        sliced_X = np.array([
             rolling_window(x, window_shape)
             for x in X
         ])
 
         #
-        # Always return a 2D result so that the RandomForestClassifier can deal with
-        # the training of this new data - Only accepts dimentions equal or lower than 2.
+        # Swap the 0 and 1 axis so as to get for each window, the value of each sample.
         #
-        newX = newX.reshape(
-            (np.prod(newX.shape[:-sample_dim]), np.prod(newX.shape[-sample_dim:]))
+        sliced_X = np.swapaxes(sliced_X, 0, 1)
+
+        if len(sliced_X.shape) > 3:
+            shape = list(sliced_X.shape)
+            sliced_X = sliced_X.reshape(shape[:2] + [np.prod(shape[2:])])
+
+        self.logger.info(
+            'Scanning turned X ({}) into sliced_X ({}). {} new instances were added '
+            'per sample'.format(X.shape, sliced_X.shape, new_instances_total)
         )
 
-        return newX, new_instances_total
+        return sliced_X
 
-    def scan_fit(self, X, y):
+    def fit(self, X, y):
+        """
+        Slice the input and for each window creates the estimators and save the estimators in
+        self.window_estimators. Then for each window, fit the estimators with the data of all
+        the samples values on that window and perform a cross_val_predict and get the predictions.
+        """
         self.logger.info('Scanning and fitting for X ({}) and y ({}) started'.format(
             X.shape, y.shape
         ))
         self.n_classes = np.unique(y).size
-        newX, new_instances_total = self.slices(X)
-        newy = y.repeat(new_instances_total)
+        sliced_X = self.slices(X)
 
-        self.logger.info(
-            'Scanning turned X ({}) into newX ({}). {} new instances were added '
-            'per sample'.format(X.shape, newX.shape, new_instances_total)
-        )
+        #
+        # Create an estimator for each generated window
+        #
+        self.windows_estimators = []
+        predictions = []
+        for window_index, window_X in enumerate(sliced_X):
+            estimators = [
+                estimator_config['estimator_class'](**estimator_config['estimator_params'])
+                for estimator_config in self.estimators_config
+            ]
+            self.windows_estimators.append(estimators)
 
-        sample_vector_list = []
-        for estimator in self.estimators:
-            self.logger.debug('Fitting newX ({}) and newy ({}) with estimator {}'.format(
-                newX.shape, newy.shape, estimator
-            ))
-            estimator.fit(newX, newy)
-
-            #
-            # Gets a prediction of newX with shape (len(newX), n_classes).
-            # The method `predict_proba` returns a vector of size n_classes.
-            #
-            self.logger.debug('Cross-validation with estimator {}'.format(estimator))
-            prediction = cross_val_predict(
-                estimator,
-                newX,
-                newy,
-                cv=self.folds,
-                method='predict_proba',
-                n_jobs=-1,
+            self.logger.debug(
+                'Window #{}:: Training estimators for window with shape {}'.format(
+                    window_index, window_X.shape
+                )
             )
 
-            #
-            # Reshapes the predictions so as to get all the window predictions of a single sample.
-            # Gets a ndarray with shape (len(X), new_instances_total * n_classes)
-            #
-            sample_vector = prediction.reshape((len(X), new_instances_total * self.n_classes))
-            sample_vector_list.append(sample_vector)
+            for estimator_index, estimator in enumerate(estimators):
+                self.logger.debug(
+                    'Window #{}:: Fitting estimator #{} ({})'
+                    .format(window_index, estimator_index, estimator.__class__)
+                )
+                estimator.fit(window_X, y)
 
-        return np.hstack(sample_vector_list)
+                #
+                # Gets a prediction of sliced_X with shape (len(newX), n_classes).
+                # The method `predict_proba` returns a vector of size n_classes.
+                #
+                self.logger.debug('Window #{}:: Cross-validation with estimator #{} ({})'.format(
+                    window_index, estimator_index, estimator.__class__
+                ))
+                prediction = cross_val_predict(
+                    estimator,
+                    window_X,
+                    y,
+                    cv=self.folds,
+                    method='predict_proba',
+                    n_jobs=-1,
+                )
 
-    def scan_predict(self, X):
+                predictions.append(prediction)
+
+        self.logger.info('Finished fitting X ({}) and got predictions with shape {}'.format(
+            X.shape, np.array(predictions).shape
+        ))
+        return np.hstack(predictions)
+
+    def predict(self, X):
         self.logger.info('Predicting X ({})'.format(X.shape))
-        newX, new_instances_total = self.slices(X)
+        sliced_X = self.slices(X)
         return np.hstack([
             estimator
-                .predict_proba(newX)
-                .reshape((len(X), new_instances_total * self.n_classes))
-            for estimator in self.estimators
+            .predict_proba(window_X)
+            for window_X, window_estimators in zip(sliced_X, self.windows_estimators)
+            for estimator in window_estimators
         ])
 
     def __repr__(self):
-        return '<MultiGrainedScanner {}>'.format(self.stride_ratio)
+        return '<MultiGrainedScanner stride_ratio={}>'.format(self.stride_ratio)
 
 
 class CascadeForest():
+    """
+    CascadeForest
 
-    def __init__(self, estimator_class, estimator_params, folds=3, verbose=False):
-        self.estimator_class = estimator_class
-        self.estimator_params = estimator_params
+    @param estimators_config    A list containing the class and parameters of the estimators for
+                                the CascadeForest.
+    @param folds                The number of k-folds to use.
+    @param verbose              Adds verbosity.
+    """
+    def __init__(self, estimators_config, folds=3, verbose=False):
+        self.estimators_config = estimators_config
         self.folds = folds
 
         self.logger = create_logger(self, verbose)
@@ -165,9 +249,11 @@ class CascadeForest():
         self.max_score = None
 
         while True:
-            self.logger.info('Level {}:: X with shape: {}'.format(self.level + 1, X.shape))
-            estimators = [self.estimator_class(**params) for params in self.estimator_params]
-
+            self.logger.info('Level #{}:: X with shape: {}'.format(self.level + 1, X.shape))
+            estimators = [
+                estimator_config['estimator_class'](**estimator_config['estimator_params'])
+                for estimator_config in self.estimators_config
+            ]
 
             predictions = []
             for estimator in estimators:
@@ -202,9 +288,7 @@ class CascadeForest():
             # the class with maximum score for each of them.
             #
             y_prediction = self.classes.take(
-                np.array(predictions)
-                    .mean(axis=0)
-                    .argmax(axis=1)
+                np.array(predictions).mean(axis=0).argmax(axis=1)
             )
 
             score = accuracy_score(y, y_prediction)
@@ -229,10 +313,8 @@ class CascadeForest():
             X = np.hstack([X] + predictions)
 
         return self.classes.take(
-            np.array(predictions)
-                .mean(axis=0)
-                .argmax(axis=1)
+            np.array(predictions).mean(axis=0).argmax(axis=1)
         )
 
     def __repr__(self):
-        return '<CascadeForest {}>'.format(len(self.estimator_params))
+        return '<CascadeForest forests={}>'.format(len(self.estimators_config))
