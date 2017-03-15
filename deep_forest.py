@@ -1,12 +1,13 @@
 #
 # Inspired by https://arxiv.org/abs/1702.08835 and https://github.com/STO-OTZ/my_gcForest/
 #
+import itertools
 import numpy as np
 
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_predict
 
-from utils import create_logger, rolling_window
+from utils import create_logger
 
 
 class MGCForest():
@@ -104,53 +105,46 @@ class MultiGrainedScanner():
 
     def slices(self, X):
         """
-        Given an input X with dimention N, return a ndarray of dimention 3 with all the instances
-        values for each window.
+        Given an input X with dimention N, this generates ndarrays with all the instances
+        values for each window. The window shape depends on the stride_ratio attribute of
+        the instance.
 
         For example, if the input has shape (10, 400), and the stride_ratio is 0.25, then this
-        will generate 301 windows with shape (10, 100). The final result would have a shape of
-        (301, 10, 100).
+        will generate 301 windows with shape (10, 100)
         """
         self.logger.debug('Slicing X with shape {}'.format(X.shape))
-        sample_shape = list(X[0].shape)
 
-        window_shape = np.maximum(
-            np.array([s * self.stride_ratio for s in sample_shape]), 1
-        ).astype(np.int16)
-        self.logger.debug('Got window shape: {}'.format(window_shape.shape))
-
-        #
-        # Calculate the windows that are going to be used and the total
-        # number of new generated samples.
-        #
-        windows_count = [sample_shape[i] - window_shape[i] + 1 for i in range(len(sample_shape))]
-        new_instances_total = np.prod(windows_count)
-
-        self.logger.debug('Slicing {} windows.'.format(windows_count))
+        sample_shape = X[0].shape
+        window_shape = [
+            max(1, int(s * self.stride_ratio)) if i < 2 else s
+            for i, s in enumerate(sample_shape)
+        ]
 
         #
-        # For each sample, get all the windows with their values
+        # Generates all the windows slices for X.
+        # For each axis generates an array showing how the window moves on that axis.
         #
-        sliced_X = np.array([
-            rolling_window(x, window_shape)
-            for x in X
-        ])
+        slices = [
+            [slice(i, i + window_axis) for i in range(sample_axis - window_axis + 1)]
+            for sample_axis, window_axis in zip(sample_shape, window_shape)
+        ]
+
+        self.logger.info('Window shape: {} Total windows: {}'.format(
+            window_shape,
+            np.prod([len(s) for s in slices])
+        ))
 
         #
-        # Swap the 0 and 1 axis so as to get for each window, the value of each sample.
+        # For each window slices, return the same slice for all the samples in X.
+        # For example, if for the first window we have the slices [slice(0, 10), slice(0, 10)],
+        # this generates the following slice on X:
+        #   X[:, 0:10, 0:10] == X[(slice(None, slice(0, 10), slice(0, 10))]
         #
-        sliced_X = np.swapaxes(sliced_X, 0, 1)
-
-        if len(sliced_X.shape) > 3:
-            shape = list(sliced_X.shape)
-            sliced_X = sliced_X.reshape(shape[:2] + [np.prod(shape[2:])])
-
-        self.logger.info(
-            'Scanning turned X ({}) into sliced_X ({}). {} new instances were added '
-            'per sample'.format(X.shape, sliced_X.shape, new_instances_total)
-        )
-
-        return sliced_X
+        for axis_slices in itertools.product(*slices):
+            yield (
+                X[(slice(None),) + axis_slices]
+                .reshape([X.shape[0], np.prod(window_shape)])
+            )
 
     def fit(self, X, y):
         """
@@ -162,14 +156,13 @@ class MultiGrainedScanner():
             X.shape, y.shape
         ))
         self.n_classes = np.unique(y).size
-        sliced_X = self.slices(X)
 
         #
         # Create an estimator for each generated window
         #
         self.windows_estimators = []
         predictions = []
-        for window_index, window_X in enumerate(sliced_X):
+        for window_index, window_X in enumerate(self.slices(X)):
             estimators = [
                 estimator_config['estimator_class'](**estimator_config['estimator_params'])
                 for estimator_config in self.estimators_config
@@ -177,7 +170,7 @@ class MultiGrainedScanner():
             self.windows_estimators.append(estimators)
 
             self.logger.debug(
-                'Window #{}:: Training estimators for window with shape {}'.format(
+                'Window #{}:: Training estimators for window data with shape {}'.format(
                     window_index, window_X.shape
                 )
             )
