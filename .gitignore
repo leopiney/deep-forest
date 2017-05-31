@@ -20,3 +20,6 @@ pip-delete-this-directory.txt
 venv/
 ENV/
 .env
+
+# Dev tests
+test*.py

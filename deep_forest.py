@@ -1,12 +1,13 @@
 #
 # Inspired by https://arxiv.org/abs/1702.08835 and https://github.com/STO-OTZ/my_gcForest/
 #
+import itertools
 import numpy as np
 
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_predict
 
-from utils import create_logger, rolling_window
+from utils import create_logger
 
 
 class MGCForest():
@@ -63,19 +64,19 @@ class MGCForest():
 
     def fit(self, X, y):
         scanned_X = np.hstack([
-            mgs.fit(X, y)
+            mgs.scan(X, y)
             for mgs in self.mgs_instances
         ])
 
         self.c_forest.fit(scanned_X, y)
 
     def predict(self, X):
-        scan_pred = np.hstack([
-            mgs.predict(X)
+        scanned_X = np.hstack([
+            mgs.scan(X)
             for mgs in self.mgs_instances
         ])
 
-        return self.c_forest.predict(scan_pred)
+        return self.c_forest.predict(scanned_X)
 
     def __repr__(self):
         return '<MGCForest {}>'.format(self.stride_ratios)
@@ -98,129 +99,144 @@ class MultiGrainedScanner():
         self.stride_ratio = stride_ratio
         self.folds = folds
 
-        self.windows_estimators = []
+        self.estimators = [
+            estimator_config['estimator_class'](**estimator_config['estimator_params'])
+            for estimator_config in self.estimators_config
+        ]
 
         self.logger = create_logger(self, verbose)
 
-    def slices(self, X):
+    def slices(self, X, y=None):
         """
-        Given an input X with dimention N, return a ndarray of dimention 3 with all the instances
-        values for each window.
+        Given an input X with dimention N, this generates ndarrays with all the instances
+        values for each window. The window shape depends on the stride_ratio attribute of
+        the instance.
 
         For example, if the input has shape (10, 400), and the stride_ratio is 0.25, then this
-        will generate 301 windows with shape (10, 100). The final result would have a shape of
-        (301, 10, 100).
+        will generate 301 windows with shape (10, 100)
         """
         self.logger.debug('Slicing X with shape {}'.format(X.shape))
-        sample_shape = list(X[0].shape)
 
-        window_shape = np.maximum(
-            np.array([s * self.stride_ratio for s in sample_shape]), 1
-        ).astype(np.int16)
-        self.logger.debug('Got window shape: {}'.format(window_shape.shape))
-
-        #
-        # Calculate the windows that are going to be used and the total
-        # number of new generated samples.
-        #
-        windows_count = [sample_shape[i] - window_shape[i] + 1 for i in range(len(sample_shape))]
-        new_instances_total = np.prod(windows_count)
-
-        self.logger.debug('Slicing {} windows.'.format(windows_count))
+        n_samples = X.shape[0]
+        sample_shape = X[0].shape
+        window_shape = [
+            max(1, int(s * self.stride_ratio)) if i < 2 else s
+            for i, s in enumerate(sample_shape)
+        ]
 
         #
-        # For each sample, get all the windows with their values
+        # Generates all the windows slices for X.
+        # For each axis generates an array showing how the window moves on that axis.
         #
-        sliced_X = np.array([
-            rolling_window(x, window_shape)
-            for x in X
-        ])
+        slices = [
+            [slice(i, i + window_axis) for i in range(sample_axis - window_axis + 1)]
+            for sample_axis, window_axis in zip(sample_shape, window_shape)
+        ]
+        total_windows = np.prod([len(s) for s in slices])
+
+        self.logger.info('Window shape: {} Total windows: {}'.format(window_shape, total_windows))
 
         #
-        # Swap the 0 and 1 axis so as to get for each window, the value of each sample.
+        # For each window slices, return the same slice for all the samples in X.
+        # For example, if for the first window we have the slices [slice(0, 10), slice(0, 10)],
+        # this generates the following slice on X:
+        #   X[:, 0:10, 0:10] == X[(slice(None, slice(0, 10), slice(0, 10))]
         #
-        sliced_X = np.swapaxes(sliced_X, 0, 1)
+        # Since this generates on each iteration a window for all the samples, we insert the new
+        # windows so that for each sample the windows are consecutive. This is done with the
+        # ordering_range magic variable.
+        #
+        windows_slices_list = None
+        ordering_range = np.arange(n_samples) + 1
 
-        if len(sliced_X.shape) > 3:
-            shape = list(sliced_X.shape)
-            sliced_X = sliced_X.reshape(shape[:2] + [np.prod(shape[2:])])
+        for i, axis_slices in enumerate(itertools.product(*slices)):
+            if windows_slices_list is None:
+                windows_slices_list = X[(slice(None),) + axis_slices]
+            else:
+                windows_slices_list = np.insert(
+                    windows_slices_list,
+                    ordering_range * i,
+                    X[(slice(None),) + axis_slices],
+                    axis=0,
+                )
 
-        self.logger.info(
-            'Scanning turned X ({}) into sliced_X ({}). {} new instances were added '
-            'per sample'.format(X.shape, sliced_X.shape, new_instances_total)
-        )
+        #
+        # Converts any sample with dimention higher or equal than 2 to just one dimention
+        #
+        windows_slices = \
+            windows_slices_list.reshape([windows_slices_list.shape[0], np.prod(window_shape)])
 
-        return sliced_X
+        #
+        # If the y parameter is not None, returns the y value for each generated window
+        #
+        if y is not None:
+            y = np.repeat(y, total_windows)
 
-    def fit(self, X, y):
+        return windows_slices, y
+
+    def scan(self, X, y=None):
         """
         Slice the input and for each window creates the estimators and save the estimators in
         self.window_estimators. Then for each window, fit the estimators with the data of all
         the samples values on that window and perform a cross_val_predict and get the predictions.
         """
         self.logger.info('Scanning and fitting for X ({}) and y ({}) started'.format(
-            X.shape, y.shape
+            X.shape, None if y is None else y.shape
         ))
         self.n_classes = np.unique(y).size
-        sliced_X = self.slices(X)
 
         #
-        # Create an estimator for each generated window
+        # Create the estimators
         #
-        self.windows_estimators = []
-        predictions = []
-        for window_index, window_X in enumerate(sliced_X):
-            estimators = [
-                estimator_config['estimator_class'](**estimator_config['estimator_params'])
-                for estimator_config in self.estimators_config
-            ]
-            self.windows_estimators.append(estimators)
+        sliced_X, sliced_y = self.slices(X, y)
+        self.logger.debug('Slicing turned X ({}) to sliced_X ({})'.format(X.shape, sliced_X.shape))
 
-            self.logger.debug(
-                'Window #{}:: Training estimators for window with shape {}'.format(
-                    window_index, window_X.shape
-                )
-            )
+        predictions = None
+        for estimator_index, estimator in enumerate(self.estimators):
+            prediction = None
 
-            for estimator_index, estimator in enumerate(estimators):
+            if y is None:
+                self.logger.debug('Prediction with estimator #{}'.format(estimator_index))
+                prediction = estimator.predict_proba(sliced_X)
+            else:
                 self.logger.debug(
-                    'Window #{}:: Fitting estimator #{} ({})'
-                    .format(window_index, estimator_index, estimator.__class__)
+                    'Fitting estimator #{} ({})'.format(estimator_index, estimator.__class__)
                 )
-                estimator.fit(window_X, y)
+                estimator.fit(sliced_X, sliced_y)
 
                 #
                 # Gets a prediction of sliced_X with shape (len(newX), n_classes).
                 # The method `predict_proba` returns a vector of size n_classes.
                 #
-                self.logger.debug('Window #{}:: Cross-validation with estimator #{} ({})'.format(
-                    window_index, estimator_index, estimator.__class__
-                ))
-                prediction = cross_val_predict(
-                    estimator,
-                    window_X,
-                    y,
-                    cv=self.folds,
-                    method='predict_proba',
-                    n_jobs=-1,
-                )
+                if estimator.oob_score:
+                    self.logger.debug('Using OOB decision function with estimator #{} ({})'.format(
+                        estimator_index, estimator.__class__
+                    ))
+                    prediction = estimator.oob_decision_function_
+                else:
+                    self.logger.debug('Cross-validation with estimator #{} ({})'.format(
+                        estimator_index, estimator.__class__
+                    ))
+                    prediction = cross_val_predict(
+                        estimator,
+                        sliced_X,
+                        sliced_y,
+                        cv=self.folds,
+                        method='predict_proba',
+                        n_jobs=-1,
+                    )
 
-                predictions.append(prediction)
+            prediction = prediction.reshape((X.shape[0], -1))
 
-        self.logger.info('Finished fitting X ({}) and got predictions with shape {}'.format(
-            X.shape, np.array(predictions).shape
+            if predictions is None:
+                predictions = prediction
+            else:
+                predictions = np.hstack([predictions, prediction])
+
+        self.logger.info('Finished scan X ({}) and got predictions with shape {}'.format(
+            X.shape, predictions.shape
         ))
-        return np.hstack(predictions)
-
-    def predict(self, X):
-        self.logger.info('Predicting X ({})'.format(X.shape))
-        sliced_X = self.slices(X)
-        return np.hstack([
-            estimator
-            .predict_proba(window_X)
-            for window_X, window_estimators in zip(sliced_X, self.windows_estimators)
-            for estimator in window_estimators
-        ])
+        return predictions
 
     def __repr__(self):
         return '<MultiGrainedScanner stride_ratio={}>'.format(self.stride_ratio)
